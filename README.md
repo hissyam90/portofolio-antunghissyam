@@ -1,6 +1,6 @@
 # Portofolio Antung Hissyam - Front-End Web Developer
 
-![Portofolio Banner](public/Meta.png)
+![Portofolio Banner]
 
 <div align="center">
 
