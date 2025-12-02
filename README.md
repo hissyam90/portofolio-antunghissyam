@@ -92,9 +92,8 @@ Ikuti langkah-langkah ini untuk menjalankan proyek di komputer Anda:
 
 **Antung Hissyam**
 
-* Website: [antung-hissyam]([https://www.eki.my.id/](https://antung-hissyam.netlify.app/))
-* GitHub: [@hissyam90](https://github.com/hissyam90)
-* Instagram: [@a_hssym](https://www.instagram.com/a_hssym/)
+* Website: https://antung-hissyam.netlify.app/
+* GitHub: https://github.com/hissyam90
 
 ---
 *Terima kasih telah mengunjungi repositori ini! Jangan lupa berikan ⭐️ jika Anda menyukainya.*
