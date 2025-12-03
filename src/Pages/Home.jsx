@@ -81,7 +81,7 @@ const WORDS = ["Informatics Student", "Tech Enthusiast"];
 const TECH_STACK = ["React", "Javascript", "Node.js", "Tailwind"];
 const SOCIAL_LINKS = [
   { icon: Github, link: "https://github.com/hissyam90" },
-  { icon: Linkedin, link: "https://www.linkedin.com/" },
+  { icon: Linkedin, link: "https://www.linkedin.com/in/antung-hissyam-225306381/" },
   { icon: Instagram, link: "https://www.instagram.com/a_hssym" }
 ];
 
