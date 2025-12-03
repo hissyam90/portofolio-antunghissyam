@@ -88,12 +88,4 @@ Ikuti langkah-langkah ini untuk menjalankan proyek di komputer Anda:
 
 ---
 
-## 👤 Penulis
-
-**Antung Hissyam**
-
-* Website: https://antung-hissyam.netlify.app/
-* GitHub: https://github.com/hissyam90
-
----
 *Terima kasih telah mengunjungi repositori ini! Jangan lupa berikan ⭐️ jika Anda menyukainya.*
