@@ -169,6 +169,7 @@ const ContactPage = () => {
                 data-aos-delay="400"
                 type="submit"
                 disabled={isSubmitting}
+                {/* MENGUBAH bg-gradient... MENJADI TEMA MONOKROM GLASS */}
                 className="w-full bg-white/10 border border-white/20 text-white py-4 rounded-xl font-semibold transition-all duration-300 hover:bg-white/20 hover:scale-[1.02] hover:shadow-lg active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Send className="w-5 h-5" />

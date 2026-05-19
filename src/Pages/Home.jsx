@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, memo } from "react"
+import React, { useState, useEffect, useCallback, memo, useRef } from "react"
 import { Github, Linkedin, Mail, ExternalLink, Instagram, Sparkles } from "lucide-react"
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 import AOS from 'aos'
@@ -90,6 +90,7 @@ const Home = () => {
   const [charIndex, setCharIndex] = useState(0)
   const [isLoaded, setIsLoaded] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
+  const cardRef = useRef(null); // Ref untuk container kartu
 
   useEffect(() => {
     AOS.init({ once: true, offset: 10 });
@@ -120,19 +121,56 @@ const Home = () => {
     return () => clearTimeout(timeout);
   }, [handleTyping]);
 
+  // LOGIK UNTUK FITUR BUSINESS CARD INTERAKTIF (TILT EFFECT)
+  const handleMouseMove = useCallback((e) => {
+    if (!cardRef.current) return;
+    const card = cardRef.current;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    // Hitung sudut kemiringan (maksimal 10 derajat)
+    const rotateX = ((y - centerY) / centerY) * -10;
+    const rotateY = ((x - centerX) / centerX) * 10;
+    
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+  }, []);
+
+  const handleMouseEnter = useCallback(() => {
+    if (!cardRef.current) return;
+    cardRef.current.style.transition = "transform 0.1s ease";
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    if (!cardRef.current) return;
+    const card = cardRef.current;
+    card.style.transition = "transform 0.5s ease";
+    // Kembalikan ke posisi semula
+    card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)";
+  }, []);
+
   const lottieOptions = {
     src: "https://lottie.host/58753882-bb6a-49f5-a2c0-950eda1e135a/NLbpVqGegK.lottie",
     loop: true,
     autoplay: true,
-    className: `w-full h-full transition-all duration-500 filter grayscale ${isHovering ? "scale-110 rotate-2" : "scale-100"}` // Menambahkan efek grayscale ke lottie
+    // Menghapus grayscale agar Lottie tetap berwarna
+    className: `w-full h-full transition-all duration-500 ${isHovering ? "scale-110 rotate-2" : "scale-100"}` 
   };
 
   return (
     <div className="min-h-screen bg-transparent overflow-hidden px-[5%] sm:px-[5%] lg:px-[10%] flex items-center justify-center" id="Home">
       <div className={`relative z-10 transition-all duration-1000 w-full max-w-6xl ${isLoaded ? "opacity-100" : "opacity-0"}`}>
         
-        {/* Business Card Container */}
-        <div className="relative bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-3xl p-8 sm:p-12 lg:p-16 shadow-2xl shadow-black/50 overflow-hidden group">
+        {/* Business Card Container - TAMBAHKAN REF DAN EVENT HANDLERS UNTUK TILT */}
+        <div 
+          ref={cardRef}
+          onMouseMove={handleMouseMove}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          className="relative bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-3xl p-8 sm:p-12 lg:p-16 shadow-2xl shadow-black/50 overflow-hidden group transition-transform duration-100" // Tambahkan transisi dasar
+        >
           {/* subtle noise/glow effect inside card */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -z-10 transform translate-x-1/2 -translate-y-1/2"></div>
           
