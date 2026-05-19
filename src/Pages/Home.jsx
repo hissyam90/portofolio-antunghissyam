@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback, memo, useRef } from "react"
-import { Github, Linkedin, Mail, ExternalLink, Instagram, Sparkles } from "lucide-react"
-import { DotLottieReact } from '@lottiefiles/dotlottie-react'
+import { Github, Linkedin, Mail, ExternalLink, Instagram, Sparkles, Code2, Cpu } from "lucide-react"
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 
@@ -72,6 +71,69 @@ const SocialLink = memo(({ icon: Icon, link }) => (
   </a>
 ));
 
+const InteractiveBusinessCard = memo(() => {
+  const cardRef = useRef(null);
+
+  const handleMouseMove = useCallback((e) => {
+    if (!cardRef.current) return;
+    const card = cardRef.current;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const rotateX = ((y - centerY) / centerY) * -15;
+    const rotateY = ((x - centerX) / centerX) * 15;
+    
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    if (!cardRef.current) return;
+    const card = cardRef.current;
+    card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)";
+  }, []);
+
+  return (
+    <div 
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="w-[300px] h-[190px] sm:w-[380px] sm:h-[230px] relative rounded-2xl bg-white/[0.03] border border-white/20 backdrop-blur-xl shadow-2xl overflow-hidden flex flex-col justify-between p-6 transition-transform duration-200 ease-out cursor-pointer group"
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      
+      <div className="flex justify-between items-start relative z-10">
+        <div>
+          <h2 className="text-lg sm:text-xl font-bold text-white tracking-widest uppercase">Antung Hissyam</h2>
+          <p className="text-xs sm:text-sm text-gray-400 font-mono mt-1">Frontend Developer</p>
+        </div>
+        <img 
+          src="/Photo.jpg" 
+          alt="Profile" 
+          className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border border-white/20 object-cover grayscale group-hover:grayscale-0 transition-all duration-500 shadow-xl" 
+        />
+      </div>
+
+      <div className="space-y-1 font-mono text-[0.6rem] sm:text-xs text-gray-500 relative z-10">
+        <p>ID : INFORMATICS-08</p>
+        <p>LOC: UNMUL - SAMARINDA</p>
+      </div>
+
+      <div className="flex justify-between items-end relative z-10">
+        <div className="flex gap-3">
+          <Code2 className="w-5 h-5 text-gray-400" />
+          <Cpu className="w-5 h-5 text-gray-400" />
+        </div>
+        <div className="text-right">
+          <p className="text-[0.55rem] sm:text-[0.65rem] tracking-[0.2em] text-gray-400">TAP TO CONNECT</p>
+        </div>
+      </div>
+    </div>
+  );
+});
+
 const TYPING_SPEED = 100;
 const ERASING_SPEED = 50;
 const PAUSE_DURATION = 2000;
@@ -89,8 +151,6 @@ const Home = () => {
   const [wordIndex, setWordIndex] = useState(0)
   const [charIndex, setCharIndex] = useState(0)
   const [isLoaded, setIsLoaded] = useState(false)
-  const [isHovering, setIsHovering] = useState(false)
-  const cardRef = useRef(null); // Ref untuk container kartu
 
   useEffect(() => {
     AOS.init({ once: true, offset: 10 });
@@ -121,61 +181,14 @@ const Home = () => {
     return () => clearTimeout(timeout);
   }, [handleTyping]);
 
-  // LOGIK UNTUK FITUR BUSINESS CARD INTERAKTIF (TILT EFFECT)
-  const handleMouseMove = useCallback((e) => {
-    if (!cardRef.current) return;
-    const card = cardRef.current;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    
-    // Hitung sudut kemiringan (maksimal 10 derajat)
-    const rotateX = ((y - centerY) / centerY) * -10;
-    const rotateY = ((x - centerX) / centerX) * 10;
-    
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-  }, []);
-
-  const handleMouseEnter = useCallback(() => {
-    if (!cardRef.current) return;
-    cardRef.current.style.transition = "transform 0.1s ease";
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    if (!cardRef.current) return;
-    const card = cardRef.current;
-    card.style.transition = "transform 0.5s ease";
-    // Kembalikan ke posisi semula
-    card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)";
-  }, []);
-
-  const lottieOptions = {
-    src: "https://lottie.host/58753882-bb6a-49f5-a2c0-950eda1e135a/NLbpVqGegK.lottie",
-    loop: true,
-    autoplay: true,
-    // Menghapus grayscale agar Lottie tetap berwarna
-    className: `w-full h-full transition-all duration-500 ${isHovering ? "scale-110 rotate-2" : "scale-100"}` 
-  };
-
   return (
     <div className="min-h-screen bg-transparent overflow-hidden px-[5%] sm:px-[5%] lg:px-[10%] flex items-center justify-center" id="Home">
       <div className={`relative z-10 transition-all duration-1000 w-full max-w-6xl ${isLoaded ? "opacity-100" : "opacity-0"}`}>
         
-        {/* Business Card Container - TAMBAHKAN REF DAN EVENT HANDLERS UNTUK TILT */}
-        <div 
-          ref={cardRef}
-          onMouseMove={handleMouseMove}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          className="relative bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-3xl p-8 sm:p-12 lg:p-16 shadow-2xl shadow-black/50 overflow-hidden group transition-transform duration-100" // Tambahkan transisi dasar
-        >
-          {/* subtle noise/glow effect inside card */}
+        <div className="relative bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-3xl p-8 sm:p-12 lg:p-16 shadow-2xl shadow-black/50 overflow-hidden">
           <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -z-10 transform translate-x-1/2 -translate-y-1/2"></div>
           
           <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
-            {/* Left Column */}
             <div className="w-full lg:w-1/2 space-y-6 sm:space-y-8 text-left z-10" data-aos="fade-right">
               <div className="space-y-4 sm:space-y-6">
                 <StatusBadge />
@@ -211,19 +224,9 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Right Column */}
-            <div className="w-full lg:w-1/2 h-[300px] sm:h-[400px] lg:h-[500px] relative flex items-center justify-center z-10"
-              onMouseEnter={() => setIsHovering(true)}
-              onMouseLeave={() => setIsHovering(false)}
-              data-aos="fade-left"
-              data-aos-delay="600">
-              
-              <div className="relative w-full h-full flex justify-center items-center">
-                <div className={`absolute inset-0 bg-gradient-to-r from-gray-500/10 to-white/5 rounded-full blur-3xl transition-all duration-700 ${isHovering ? "opacity-40 scale-110" : "opacity-20 scale-100"}`}></div>
-                <div className="w-[80%] h-[80%] relative z-10 drop-shadow-2xl">
-                  <DotLottieReact {...lottieOptions} />
-                </div>
-              </div>
+            <div className="w-full lg:w-1/2 h-auto relative flex items-center justify-center z-10" data-aos="fade-left" data-aos-delay="600">
+              <div className="absolute inset-0 bg-gradient-to-r from-gray-500/10 to-white/5 rounded-full blur-3xl opacity-20 scale-100"></div>
+              <InteractiveBusinessCard />
             </div>
           </div>
         </div>

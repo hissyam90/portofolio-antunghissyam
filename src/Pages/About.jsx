@@ -48,7 +48,6 @@ const ProfileImage = memo(() => (
           <img
             src="/Photo.jpg"
             alt="Profile"
-            {/* MENGHAPUS 'filter grayscale' dan 'group-hover:grayscale-0' */}
             className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-2" 
             loading="lazy"
           />
