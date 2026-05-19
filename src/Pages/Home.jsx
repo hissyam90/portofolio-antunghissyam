@@ -117,8 +117,8 @@ const InteractiveBusinessCard = memo(() => {
       </div>
 
       <div className="space-y-1 font-mono text-[0.6rem] sm:text-xs text-gray-500 relative z-10">
-        <p>ID : INFORMATICS-08</p>
-        <p>LOC: UNMUL - SAMARINDA</p>
+        <p>ID : IF-C-2025</p>
+        <p>LOC: Unidentified</p>
       </div>
 
       <div className="flex justify-between items-end relative z-10">
