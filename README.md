@@ -18,7 +18,7 @@ Ini adalah repositori kode sumber untuk **Website Portofolio Pribadi Antung Hiss
 
 Dibangun dengan fokus pada desain antarmuka modern, responsif, dan performa tinggi, website ini menggunakan ekosistem React terbaru dengan Vite dan manajemen konten dinamis menggunakan Supabase.
 
-🔗 **Live Demo:** [https://antung-hissyam.netlify.app/] 
+🔗 **Live Demo:** [https://portofolio-antunghissyam.vercel.app/] 
 
 ## ✨ Fitur Utama
 
