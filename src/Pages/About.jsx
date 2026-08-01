@@ -1,5 +1,5 @@
-import React, { useEffect, memo, useMemo } from "react"
-import { FileText, Code, Award, Globe, ArrowUpRight, Sparkles } from "lucide-react"
+import React, { useEffect, memo, useMemo, useState } from "react"
+import { FileText, Code, Award, Globe, ArrowUpRight, Sparkles, Lock } from "lucide-react"
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 
@@ -108,6 +108,9 @@ const StatCard = memo(({ icon: Icon, color, value, label, description, animation
 ));
 
 const AboutPage = () => {
+  // State untuk mengontrol Modal CV
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const { totalProjects, totalCertificates, YearExperience } = useMemo(() => {
     const storedProjects = JSON.parse(localStorage.getItem("projects") || "[]");
     const storedCertificates = JSON.parse(localStorage.getItem("certificates") || "[]");
@@ -206,16 +209,21 @@ const AboutPage = () => {
                 </div>
                 
                 <blockquote className="text-gray-300 text-center lg:text-left italic font-medium text-sm relative z-10 pl-6">
-                  "A strong foundation in the first semester will form a solid career in technology."
+                  "A strong foundation in basic programming will build a solid career in the technology."
                 </blockquote>
               </div>
 
               <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 lg:gap-4 lg:px-0 w-full">
-                <a href="https://drive.google.com/file/d/1SRVdUQwZOAj9KDAu7XXdoaH-MMO16NNF/view?usp=sharing" className="w-full lg:w-auto">
-                  <button data-aos="fade-up" data-aos-duration="800" className="w-full lg:w-auto sm:px-6 py-2 sm:py-3 rounded-lg bg-white/10 text-white border border-white/20 font-medium transition-all duration-300 hover:bg-white/20 hover:scale-105 flex items-center justify-center lg:justify-start gap-2 shadow-lg">
+                <div className="w-full lg:w-auto">
+                  <button 
+                    onClick={() => setIsModalOpen(true)}
+                    data-aos="fade-up" 
+                    data-aos-duration="800" 
+                    className="w-full lg:w-auto sm:px-6 py-2 sm:py-3 rounded-lg bg-white/10 text-white border border-white/20 font-medium transition-all duration-300 hover:bg-white/20 hover:scale-105 flex items-center justify-center lg:justify-start gap-2 shadow-lg"
+                  >
                     <FileText className="w-4 h-4 sm:w-5 sm:h-5" /> Download CV
                   </button>
-                </a>
+                </div>
                 <a href="#Portofolio" className="w-full lg:w-auto">
                   <button data-aos="fade-up" data-aos-duration="1000" className="w-full lg:w-auto sm:px-6 py-2 sm:py-3 rounded-lg border border-gray-400/50 text-gray-300 font-medium transition-all duration-300 hover:scale-105 flex items-center justify-center lg:justify-start gap-2 hover:bg-white/5">
                     <Code className="w-4 h-4 sm:w-5 sm:h-5" /> View Projects
@@ -238,7 +246,32 @@ const AboutPage = () => {
 
       </div>
 
-      <style jsx>{`
+      {/* Modal Download CV */}
+      {isModalOpen && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4" 
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div 
+            className="bg-[#111111] border border-white/10 rounded-2xl p-8 max-w-sm w-full text-center shadow-2xl relative transform transition-all animate-zoomIn"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4 border border-white/10">
+              <Lock className="w-8 h-8 text-gray-400" />
+            </div>
+            <h3 className="text-xl font-bold text-white mb-2">CV Locked</h3>
+            <p className="text-gray-400 mb-6">Hire me to unlock full potential</p>
+            <button 
+              onClick={() => setIsModalOpen(false)}
+              className="px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors border border-white/10 font-medium"
+            >
+              Tutup
+            </button>
+          </div>
+        </div>
+      )}
+
+      <style jsx="true">{`
         @keyframes float {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-20px); }
@@ -254,6 +287,19 @@ const AboutPage = () => {
         }
         .animate-spin-slower {
           animation: spin-slower 8s linear infinite;
+        }
+        @keyframes zoomIn {
+          from {
+            opacity: 0;
+            transform: scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+        .animate-zoomIn {
+          animation: zoomIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
       `}</style>
     </div>

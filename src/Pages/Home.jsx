@@ -94,6 +94,11 @@ const InteractiveBusinessCard = memo(() => {
     const card = cardRef.current;
     card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)";
   }, []);
+  
+  const handleConnect = useCallback((e) => {
+    e.stopPropagation();
+    window.open('https://github.com/hissyam90', '_blank');
+  }, []);
 
   return (
     <div 
@@ -127,7 +132,13 @@ const InteractiveBusinessCard = memo(() => {
           <Cpu className="w-5 h-5 text-gray-400" />
         </div>
         <div className="text-right">
-          <p className="text-[0.55rem] sm:text-[0.65rem] tracking-[0.2em] text-gray-400">TAP TO CONNECT</p>
+          {/* Tombol akan membuka LinkedIn di tab baru */}
+          <button 
+            onClick={handleConnect}
+            className="text-[0.55rem] sm:text-[0.65rem] tracking-[0.2em] font-bold text-gray-400 hover:text-white transition-colors duration-300"
+          >
+            TAP TO CONNECT
+          </button>
         </div>
       </div>
     </div>
